@@ -1,0 +1,166 @@
+:root {
+  --a: #687ef9;
+  --b: #5ef97b;
+  --c: #e5c93d;
+  --d: #e84553;
+  --e: #5e11db;
+  --black: #111;
+  --white: #fff;
+  --gray: #f0ecec
+} /* Set for width of main  */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+}
+
+html {
+  color: #111;
+  background-color: #f0ecec;
+  font-family: 'Muli', sans-serif;
+  font-size: 20px;
+}
+
+html.is-inverted {
+  color: #fff;
+  background-color: #111;
+}
+
+.app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
+}
+.todoApp {
+  width: 100vw;
+}
+@media (min-width: 31.250rem) {
+  .todoApp {
+    width: 80vw;
+    margin: 0 auto;
+  }
+}
+
+.header {
+  width: 100vw;
+  height: 80px;
+  height: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #e5c93d;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header-title {
+  font-size: 2em;
+}
+
+.TodoForm {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  height: 48px;
+  height: 3rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 48px;
+  margin-top: 3rem;
+}
+  .TodoForm-input {
+    width: 80vw;
+    outline: none;
+    border: 0;
+    border-top: solid 2px #687ef9;
+    font-size: 1em;
+    padding: 0 .5em;
+  }
+    .TodoForm-input::-webkit-input-placeholder {
+      color: rgb(NaN, NaN, NaN);
+    }
+    .TodoForm-input::-moz-placeholder {
+      color: rgb(NaN, NaN, NaN);
+    }
+    .TodoForm-input:-ms-input-placeholder {
+      color: rgb(NaN, NaN, NaN);
+    }
+    .TodoForm-input::placeholder {
+      color: rgb(NaN, NaN, NaN);
+    }
+    .TodoForm-input:focus,
+    .TodoForm-input:active {
+      border-top: solid 2px #5ef97b;
+    }
+  .TodoForm-btn {
+    width: 20vw;
+    background-color: #687ef9;
+  }
+    .TodoForm-btn-content {
+      height: 2em;
+      width: 2em;
+    }
+
+.TodoList {
+  width: 70vw;
+  margin: 1em auto;
+  max-height: calc(100vh - 11rem);
+  overflow: scroll;
+}
+
+.Todo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  list-style-type: none;
+  background-color: #5ef97b;
+  padding: .5em;
+  margin: 1em 0;
+  border-radius: 5px;
+}
+  .Todo-text {
+    max-width: calc(70vw - 6em);
+  }
+
+  .Todo-actions {
+    width: 6em;
+  }
+    [class*="Todo-btn"] {
+      padding: .2em .5em;
+    }
+    .Todo-btn-delete {
+      background-color: #687ef9;
+    }
+
+button {
+  all: unset;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; 
+}
+
+/*# sourceMappingURL=landing.css.map*/

@@ -1,0 +1,138 @@
+:root {
+  --a: #687ef9;
+  --b: #5ef97b;
+  --c: #e5c93d;
+  --d: #e84553;
+  --e: #5e11db;
+  --black: #111;
+  --white: #fff;
+  --gray: #f0ecec;
+
+  --border-radius: {
+    border-radius: 5px;
+  }
+}
+
+@custom-media --xs-viewport (min-width: 16.667rem);
+@custom-media --s-viewport (min-width: 22.197rem);
+@custom-media --m-viewport (min-width: 31.250rem);
+@custom-media --xm-viewport (min-width: 35rem); /* Set for width of main  */
+@custom-media --l-viewport (min-width: 41.667rem);
+@custom-media --xl-viewport (min-width: 50.00rem);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+}
+
+html {
+  color: var(--black);
+  background-color: var(--gray);
+  font-family: 'Muli', sans-serif;
+  font-size: 20px;
+}
+
+html.is-inverted {
+  color: var(--white);
+  background-color: var(--black);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.todoApp {
+  width: 100vw;
+}
+@media (--m-viewport) {
+  .todoApp {
+    width: 80vw;
+    margin: 0 auto;
+  }
+}
+
+.header {
+  width: 100vw;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  background-color: var(--c);
+  align-items: center;
+}
+.header-title {
+  font-size: 2em;
+}
+
+.TodoForm {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100vw;
+  height: 3rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+  .TodoForm-input {
+    width: 80vw;
+    outline: none;
+    border: 0;
+    border-top: solid 2px var(--a);
+    font-size: 1em;
+    padding: 0 .5em;
+  }
+    .TodoForm-input::placeholder {
+      color: color(var(--gray) shade(+ 10%));
+    }
+    .TodoForm-input:focus,
+    .TodoForm-input:active {
+      border-top: solid 2px var(--b);
+    }
+  .TodoForm-btn {
+    width: 20vw;
+    background-color: var(--a);
+  }
+    .TodoForm-btn-content {
+      height: 2em;
+      width: 2em;
+    }
+
+.TodoList {
+  width: 70vw;
+  margin: 1em auto;
+  max-height: calc(100vh - 11rem);
+  overflow: scroll;
+}
+
+.Todo-wrapper {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  background-color: var(--b);
+  padding: .5em;
+  margin: 1em 0;
+  @apply --border-radius;
+}
+  .Todo-text {
+    max-width: calc(70vw - 6em);
+  }
+
+  .Todo-actions {
+    width: 6em;
+  }
+    [class*="Todo-btn"] {
+      padding: .2em .5em;
+    }
+    .Todo-btn-delete {
+      background-color: var(--a);
+    }
+
+button {
+  all: unset;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center; 
+}
