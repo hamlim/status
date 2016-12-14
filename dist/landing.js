@@ -21484,10 +21484,16 @@ webpackJsonp([0,1],[
 	  display: 'flex',
 	  justifyContent: 'space-between',
 	  listStyleType: 'none',
-	  backgroundColor: 'var(--b)',
+	  backgroundColor: 'var(--white)',
 	  padding: '.5em',
 	  margin: '1em 0',
 	  borderRadius: 'var(--br)'
+	});
+	
+	var todoActionsClass = (0, _cxs2.default)({
+	  width: '7em',
+	  display: 'flex',
+	  justifyContent: 'space-between'
 	});
 	
 	var Title = function Title(props) {
@@ -21563,31 +21569,29 @@ webpackJsonp([0,1],[
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'Todo-actions' },
-	      _react2.default.createElement(
+	      { className: todoActionsClass },
+	      todo.stage === 0 ? '' : _react2.default.createElement(
 	        'button',
 	        {
 	          type: 'button',
-	          className: todo.stage === 0 ? 'Todo-btn-prev is-disabled' : 'Todo-btn-prev',
+	          className: 'Todo-btn-prev',
 	          onClick: function onClick() {
 	            previous(todo);
-	          }
-	        },
+	          } },
 	        _react2.default.createElement(
 	          'svg',
 	          { className: 'cxs-1604551930', width: '1em', height: '1em', fill: colorD, 'data-id': 'geomicon-chevronLeft', viewBox: '0 0 32 32' },
 	          _react2.default.createElement('path', { d: 'M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z' })
 	        )
 	      ),
-	      _react2.default.createElement(
+	      todo.stage === 3 ? '' : _react2.default.createElement(
 	        'button',
 	        {
 	          type: 'button',
-	          className: todo.stage === 2 ? 'Todo-btn-next is-disabled' : 'Todo-btn-next',
+	          className: 'Todo-btn-next',
 	          onClick: function onClick() {
 	            next(todo);
-	          }
-	        },
+	          } },
 	        _react2.default.createElement(
 	          'svg',
 	          { className: 'cxs-1604551930', width: '1em', height: '1em', fill: colorD, 'data-id': 'geomicon-chevronRight', viewBox: '0 0 32 32' },
@@ -21600,9 +21604,8 @@ webpackJsonp([0,1],[
 	          type: 'button',
 	          className: 'Todo-btn-delete',
 	          onClick: function onClick() {
-	            remove(todo.id);
-	          }
-	        },
+	            remove(todo);
+	          } },
 	        _react2.default.createElement(
 	          'svg',
 	          { className: 'cxs-1604551930', width: '1em', height: '1em', fill: colorC, 'data-id': 'geomicon-check', viewBox: '0 0 32 32' },
@@ -21615,10 +21618,12 @@ webpackJsonp([0,1],[
 	
 	var TodoList = function TodoList(_ref3) {
 	  var todos = _ref3.todos,
-	      remove = _ref3.remove;
+	      remove = _ref3.remove,
+	      next = _ref3.next,
+	      previous = _ref3.previous;
 	
 	  var todoNode = todos.map(function (todo) {
-	    return _react2.default.createElement(Todo, { todo: todo, key: todo.id, remove: remove });
+	    return _react2.default.createElement(Todo, { todo: todo, key: todo.id, remove: remove, next: next, previous: previous });
 	  });
 	  return _react2.default.createElement(
 	    'ul',
@@ -21660,16 +21665,51 @@ webpackJsonp([0,1],[
 	
 	  }, {
 	    key: 'handleRemove',
-	    value: function handleRemove(id) {
-	      // Filter all todos except the one to be removed
-	
-	      this.state.data.forEach(function (todo) {
-	        if (todo.id === id) {
-	          todo.stage = 3;
+	    value: function handleRemove(todo) {
+	      todo.id = 3;
+	      var localID = todo.id;
+	      for (var key in this.state.data) {
+	        var allTodos = this.state.data;
+	        var todoitem = allTodos[key];
+	        if (localID === todoitem.id) {
+	          allTodos[key] = todo;
 	        }
-	      });
-	      // Update state with filter
-	      // this.setState({data: remainder});
+	        this.setState({
+	          data: allTodos
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'handlePreviousStage',
+	    value: function handlePreviousStage(todo) {
+	      todo.stage -= 1;
+	      var localID = todo.id;
+	      for (var key in this.state.data) {
+	        var allTodos = this.state.data;
+	        var todoitem = allTodos[key];
+	        if (localID === todoitem.id) {
+	          allTodos[key] = todo;
+	        }
+	        this.setState({
+	          data: allTodos
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'handleNextStage',
+	    value: function handleNextStage(todo) {
+	      todo.stage += 1;
+	      var localID = todo.id;
+	      for (var key in this.state.data) {
+	        var allTodos = this.state.data;
+	        var todoitem = allTodos[key];
+	        if (localID === todoitem.id) {
+	          allTodos[key] = todo;
+	        }
+	        this.setState({
+	          data: allTodos
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -21682,7 +21722,9 @@ webpackJsonp([0,1],[
 	        _react2.default.createElement(TodoForm, { addTodo: this.addTodo.bind(this) }),
 	        _react2.default.createElement(TodoList, {
 	          todos: this.state.data,
-	          remove: this.handleRemove.bind(this)
+	          remove: this.handleRemove.bind(this),
+	          next: this.handleNextStage.bind(this),
+	          previous: this.handlePreviousStage.bind(this)
 	        })
 	      );
 	    }

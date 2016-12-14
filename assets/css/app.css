@@ -120,9 +120,6 @@ html.is-inverted {
     max-width: calc(70vw - 6em);
   }
 
-  .Todo-actions {
-    width: 6em;
-  }
     [class*="Todo-btn"] {
       padding: .2em .5em;
     }

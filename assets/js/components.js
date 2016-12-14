@@ -37,12 +37,17 @@ const todoWrapperClasses = cxs({
   display: 'flex',
   justifyContent: 'space-between',
   listStyleType: 'none',
-  backgroundColor: 'var(--b)',
+  backgroundColor: 'var(--white)',
   padding: '.5em',
   margin: '1em 0',
   borderRadius: 'var(--br)'
 });
 
+const todoActionsClass = cxs({
+  width: '7em',
+  display: 'flex',
+  justifyContent: 'space-between'
+});
 
 const Title = (props) => {
   return (
@@ -91,44 +96,28 @@ const TodoForm = ({addTodo}) => {
 const Todo = ({todo, remove, previous, next}) => {
   return (
     <li className={todoWrapperClasses} data-state={todo.state}>
-      {todo.stage === 3 ? 
-        <s className="Todo-text"> {todo.text} </s>
-      :
-      <span className="Todo-text">
-        {todo.text}
-      </span>
-      }
-      <div className="Todo-actions">
+      {todo.stage === 3 ? <s className="Todo-text"> {todo.text} </s> : <span className="Todo-text">{todo.text}</span> }
+      <div className={todoActionsClass}>
+        {todo.stage === 0 ? '' : 
         <button 
           type="button"
-          className={ todo.stage === 0 ? 'Todo-btn-prev is-disabled' : 'Todo-btn-prev'}
-          onClick={
-            () => {
-              previous(todo);
-            }
-          }
-        >
+          className='Todo-btn-prev'
+          onClick={() => {previous(todo);}}>
           <svg className="cxs-1604551930" width="1em" height="1em" fill={colorD} data-id="geomicon-chevronLeft" viewBox="0 0 32 32"><path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z" /></svg>
         </button>
+        }
+        {todo.stage === 3 ? '' : 
         <button 
           type="button"
-          className={ todo.stage === 2 ? 'Todo-btn-next is-disabled' : 'Todo-btn-next'}
-          onClick={
-            () => {
-              next(todo);
-            }
-          }
-        >
+          className='Todo-btn-next'
+          onClick={() => { next(todo);}}>
           <svg className="cxs-1604551930" width="1em" height="1em" fill={colorD} data-id="geomicon-chevronRight" viewBox="0 0 32 32"><path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z" /></svg>
         </button>
+        }
         <button 
           type="button"
           className="Todo-btn-delete"
-          onClick={ () => {
-              remove(todo.id);
-            }
-          }
-        >
+          onClick={ () => {remove(todo);}}>
           <svg className="cxs-1604551930" width="1em" height="1em" fill={colorC} data-id="geomicon-check" viewBox="0 0 32 32">
             <path d="M1 14 L5 10 L13 18 L27 4 L31 8 L13 26 z" />
           </svg>
@@ -138,9 +127,9 @@ const Todo = ({todo, remove, previous, next}) => {
   );
 };
 
-const TodoList = ({todos, remove}) => {
+const TodoList = ({todos, remove, next, previous}) => {
   const todoNode = todos.map((todo) => {
-    return (<Todo todo={todo} key={todo.id} remove={remove}/>)
+    return (<Todo todo={todo} key={todo.id} remove={remove} next={next} previous={previous} />)
   });
   return (<ul className="TodoList">{todoNode}</ul>);
 };
@@ -165,16 +154,49 @@ export class TodoApp extends React.Component {
     this.setState({data: this.state.data});
   }
   // Handle remove
-  handleRemove(id){
-    // Filter all todos except the one to be removed
-
-    this.state.data.forEach((todo) => {
-      if(todo.id === id) {
-        todo.stage = 3;
+  handleRemove(todo){
+    todo.id = 3;
+    let localID = todo.id;
+    for (let key in this.state.data) {
+      let allTodos = this.state.data;
+      let todoitem = allTodos[key];
+      if (localID === todoitem.id) {
+        allTodos[key] = todo;
       }
-    });
-    // Update state with filter
-    // this.setState({data: remainder});
+      this.setState({
+        data: allTodos
+      });
+    }
+  }
+
+  handlePreviousStage(todo) {
+    todo.stage -= 1;
+    let localID = todo.id;
+    for (let key in this.state.data) {
+      let allTodos = this.state.data;
+      let todoitem = allTodos[key];
+      if (localID === todoitem.id) {
+        allTodos[key] = todo;
+      }
+      this.setState({
+        data: allTodos
+      });
+    }
+  }
+
+  handleNextStage(todo) {
+    todo.stage += 1;
+    let localID = todo.id;
+    for (let key in this.state.data) {
+      let allTodos = this.state.data;
+      let todoitem = allTodos[key];
+      if (localID === todoitem.id) {
+        allTodos[key] = todo;
+      }
+      this.setState({
+        data: allTodos
+      });
+    }
   }
 
   render(){
@@ -186,6 +208,8 @@ export class TodoApp extends React.Component {
         <TodoList 
           todos={this.state.data} 
           remove={this.handleRemove.bind(this)}
+          next={this.handleNextStage.bind(this)}
+          previous={this.handlePreviousStage.bind(this)}
         />
       </section>
     );
