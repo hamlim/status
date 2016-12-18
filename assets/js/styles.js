@@ -71,3 +71,24 @@ export const todoActionsClass = cxs({
   display: 'flex',
   justifyContent: 'space-between'
 });
+
+export const todoWrapperClassesWOtherStyles = cxs({
+  display: 'flex',
+  justifyContent: 'space-between',
+  listStyleType: 'none',
+  backgroundColor: 'var(--gray)',
+  padding: '.5em',
+  margin: '1em 0',
+  borderRadius: 'var(--br)',
+});
+
+export const boundStyleTodo1 = cxs('.is-sage1', {
+  background: 'linear-gradient(to right, #687ef9 0%, #687ef9 33.33%, #fff 33.34%, #fff 100%)'
+});
+
+export const boundStyleTodo2 = cxs('.is-sage2', {
+  background: 'linear-gradient(to right, #687ef9 0%, #687ef9 66.66%, #fff 66.67%, #fff 100%)'
+});
+export const boundStyleTodo3 = cxs('.is-sage3', {
+  background: '#687ef9'
+});
